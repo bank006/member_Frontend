@@ -56,7 +56,7 @@ function Addmember({ closeaddmember }) {
     }
     return (
         <div className='loading-overlay absolute inset-0 bg-slate-50 bg-opacity-80 flex items-center justify-center z-1 '>
-            {successaddmember && <Success />}
+            {successaddmember && <Success message={"เพิ่มสมาชิกสำเร็จ"}  />}
             {!addmembershow && <div className='bg-white w-[594px] h-[671px] drop-shadow-[16px_16px_0_rgba(0,0,0,0.4)] rounded-[24px] animate-scaleIn'>
                 <div className='h-full w-full flex justify-center p-[20px]'>
                     <div className='h-full w-[90%] text-center pt-[40px]'>
@@ -77,9 +77,9 @@ function Addmember({ closeaddmember }) {
                     <div className='h-full w-full' >
                         <div className='text-center h-full w-full mt-[100px]'>
                             <p className='text-[45px]'>เป็นสมาชิกอยู่แล้ว</p>
-                            <div className='text-[35px] mt-[40px]'>
+                            <div className='text-[45px] mt-[40px]'>
                                 <p>คุณ {user.fullname}</p>
-                                <p>เบอร์โทรศัพท์ {user.phonenum}</p>
+                                {/* <p>เบอร์โทรศัพท์ {user.phonenum}</p> */}
                             </div>
                             <div className='flex justify-center w-full items-center'>
                                 <p className='text-[40px] mr-[35px]'>สะสม</p>
@@ -92,11 +92,11 @@ function Addmember({ closeaddmember }) {
                         </div>
                     </div>
                 ) : (
-                    <div className='h-[50%] w-full ' >
+                    <div className='h-[50%] w-full mt-[30px] ' >
                         <div className='flex justify-center items-center h-full w-full'>
                             <div className=''>
                                 <p className='w-full text-center text-[45px]'>เป็นสมาชิกอยู่แล้ว</p>
-                                <p className='w-full text-center text-[45px]'>ไม่มีพอยน์สะสม</p>
+                                <p className='w-full text-center text-[45px] mt-[50px] pt-[50px]'>ไม่มีพอยน์สะสม</p>
                             </div>
                         </div>
                         <div className='flex justify-center mt-[80px]'>

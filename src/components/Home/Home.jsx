@@ -46,6 +46,10 @@ function Home() {
             setLoading(false);
         }, 3000);
     }
+
+    const handleClosefind = () => {
+        setshowfind(false);
+    }
     return (
         <div className='bg-[#ADADAD] h-screen w-screen p-5 pt-[30px]'>
             <div className='h-[90%] w-full flex justify-center'>
@@ -64,7 +68,7 @@ function Home() {
                     </div>}
                     {showPopup && <Member closemember={handleClosePopup} />}
                     {showaddmember && <Addmember closeaddmember={ handleCloseaddmember}/>}
-                    {showfind && <Find />}
+                    {showfind && <Find closefind={handleClosefind} />}
                 </div>
             </div>
         </div>

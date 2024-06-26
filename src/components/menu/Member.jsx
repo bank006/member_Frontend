@@ -9,7 +9,7 @@ function Member({ closemember }) {
     const [uuid_user, setuuid_user] = useState('')
     const [phonenum, setNumber] = useState("")
     const [membernum, setmembernum] = useState(false)
-    const [addpoint , setaddpoint ]= useState(false)
+    const [addpoint, setaddpoint] = useState(false)
     const [error, set_Error] = useState(false)
     const [issuccess, set] = useState(false)
     const [user, setuser] = useState([])
@@ -80,8 +80,8 @@ function Member({ closemember }) {
     return (
         <div className="loading-overlay absolute inset-0 bg-slate-50 bg-opacity-80 flex items-center justify-center z-1 ">
             <div className='flex w-full h-full  justify-center items-center'>
-                {error && <Error />}
-                {issuccess && <Success />}
+                {error && <Error message={"ไม่ได้เป็นสมาชิก"} />}
+                {issuccess && <Success  message={"เพิ่มคะแนนสำเร็จ"}  />}
                 {!membernum && <div className='bg-white w-[594px] h-[400px] drop-shadow-[16px_16px_0_rgba(0,0,0,0.4)] rounded-[24px] animate-scaleIn'>
                     <div className='h-full w-full flex justify-center p-[20px]'>
                         <div className='h-full w-[90%] text-center pt-[40px]'>
@@ -89,7 +89,7 @@ function Member({ closemember }) {
                             <div>
                                 <input onChange={(e) => setNumber(e.target.value)} placeholder='exp:065-xxx-xxx' type="number" pattern="[0-9]*" className='pl-[20px] border border-black rounded-[50px] w-[90%] h-[80px] outline-none  mt-[50px] text-[30px]' />
                             </div>
-                            <div className='flex justify-center mt-[50px]'>
+                            <div className='flex justify-center mt-[50px] mb-[30px]'>
                                 <button onClick={closemember} className='bg-[#FF9292] hover:bg-[#f45353] w-[173px] h-[71px] text-[40px] rounded-[24px] mr-[12px]'>ยกเลิก</button>
                                 <button onClick={handlelogin} className='bg-[#75C381] w-[173px] h-[71px] rounded-[24px] text-[40px] '>ตกลง</button>
                             </div>
@@ -101,7 +101,7 @@ function Member({ closemember }) {
                         <div className='flex justify-center w-full h-full'>
                             <div className='flex justify-center items-center w-full h-[100%]'>
                                 <div className='text-center h-full w-full mt-[100px]'>
-                                    <div>
+                                    {user ? (<div>
                                         <div className='text-[35px]'>
                                             <p>คุณ {user.fullname}</p>
                                         </div>
@@ -113,7 +113,11 @@ function Member({ closemember }) {
                                         <div className='flex w-full justify-center'>
                                             <hr className='w-[100%] bg-black' />
                                         </div>
-                                    </div>
+                                    </div>) : (
+                                        <>
+                                        <p className='text-[45px]'>ไม่มีคะแนนสะสม</p>
+                                        </>
+                                    )}
                                     <div className='mt-[40px] h-[50%]'>
                                         <p className='text-[40px]'>กรุณากรอกราคาสินค้าทั้งหมด</p>
                                         <div className='flex justify-center items-center mt-[40px]'>
@@ -126,6 +130,8 @@ function Member({ closemember }) {
                                             <button onClick={updateuserpoint} className='bg-[#75C381] w-[173px] h-[71px] rounded-[24px] text-[40px] '>ตกลง</button>
                                         </div>
                                     </div>
+
+
                                 </div>
                             </div>
                         </div>

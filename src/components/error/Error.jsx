@@ -1,7 +1,7 @@
 import React from 'react'
 
 import error from '../img/error.png'
-function Error() {
+function Error({ message }) {
     const reload = () => {
         window.location.reload()
     }
@@ -10,7 +10,10 @@ function Error() {
             <div className='w-full h-full p-[30px] flex justify-center '>
                 <div className='h-full  m-3 '>
                     <img src={error} alt="" className='w-[240px] h-[240px]' />
-                    <div className='flex w-full h-full justify-center  mt-[150px]'>
+                    <div className='text-[35px] text-center mt-[50px]'>
+                        <p>{message}</p>
+                    </div>
+                    <div className='flex w-full h-full justify-center  mt-[50px]'>
                         <button onClick={reload} className='bg-[#75C381] w-[200px] h-[91px] rounded-[24px] text-[40px] '>ตกลง</button>
                     </div>
                 </div>
