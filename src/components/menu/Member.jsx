@@ -65,6 +65,7 @@ function Member({ closemember }) {
     }
 
     const updateuserpoint = async () => {
+        setLoading(true);
         const data = {
             uuid_user: uuid_user,
             point: resultrate
@@ -77,6 +78,8 @@ function Member({ closemember }) {
                 setaddpoint(false)
             } catch (error) {
                 console.error('update point user feild', error.message);
+            } finally {
+                setLoading(false)
             }
         } else {
             console.log('error')
