@@ -92,7 +92,8 @@ function Find({ closefind }) {
                                                 <hr className='w-[100%] bg-black' />
                                             </div>
                                             <div className='flex justify-center mt-[50px]'>
-                                                <button onClick={openpoint} className='bg-[#75C381] w-[363px] h-[131px] rounded-[24px] text-[45px] '>แลกพอยท์</button>
+                                            <button onClick={reload} className='bg-[#FF9292] w-[333px] h-[90px] rounded-[24px] text-[45px] mr-[15px] '>ยกเลิก</button>
+                                                <button onClick={openpoint} className='bg-[#75C381] w-[333px] h-[90px] rounded-[24px] text-[45px] '>แลกพอยท์</button>
                                             </div>
                                         </>
                                     ) : (

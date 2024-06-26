@@ -67,7 +67,7 @@ function Addmember({ closeaddmember }) {
                         </div>
                         <div className='flex justify-center mt-[130px]'>
                             <button onClick={closeaddmember} className='bg-[#FF9292] hover:bg-[#f45353] w-[173px] h-[71px] text-[40px] rounded-[24px] mr-[12px]'>ยกเลิก</button>
-                            <button onClick={addmember} className='bg-[#75C381] w-[173px] h-[71px] rounded-[24px] text-[40px] '>ตกลง</button>
+                            <button onClick={addmember} className='bg-[#75C381] hover:bg-[#45a954] w-[173px] h-[71px] rounded-[24px] text-[40px] '>ตกลง</button>
                         </div>
                     </div>
                 </div>
