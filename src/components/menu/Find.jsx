@@ -60,7 +60,7 @@ function Find({ closefind }) {
                 <div className='bg-white w-[720px] h-[263px] drop-shadow-[16px_16px_0_rgba(0,0,0,0.4)] rounded-[24px] animate-scaleIn p-10 '>
                     <p className='text-center text-[35px] mt-[10px]'>กรุณากรอกเบอร์โทรสมาชิกสำหรับการค้นหา</p>
                     <div className='flex w-[100%]  h-[70%] items-center justify-center'>
-                        <input onChange={(e) => setphonenum(e.target.value)} type="number" className='border border-black rounded-[50px] w-[505px] h-[80px] text-[30px] pl-[20px] outline-none' placeholder='exp:065-xxx-xxx' />
+                        <input onChange={(e) => setphonenum(e.target.value)} type="number" inputmode="numeric"  className='border border-black rounded-[50px] w-[505px] h-[80px] text-[30px] pl-[20px] outline-none' placeholder='exp:065-xxx-xxx' />
                         <img onClick={handlelogin} src={find} alt="" className='w-[67px] h-[61px] m-5' />
                     </div>
                     <div className='flex justify-center mt-[50px]'>
@@ -85,7 +85,7 @@ function Find({ closefind }) {
                                 <div>
                                     {user ? (
                                         <>
-                                            <div className='text-[35px] text-center mt-[100px]'>
+                                            <div className='text-[35px] text-center mt-[70px]'>
                                                 <p>คุณ {user.fullname || <Player
                                                     autoplay
                                                     loop
@@ -115,7 +115,7 @@ function Find({ closefind }) {
                                             <div className='flex w-full justify-center'>
                                                 <hr className='w-[100%] bg-black' />
                                             </div>
-                                            <div className='flex justify-center mt-[50px]'>
+                                            <div className='flex justify-center mt-[100px]'>
                                                 <button onClick={reload} className='bg-[#FF9292] w-[333px] h-[90px] rounded-[24px] text-[45px] mr-[15px] '>ยกเลิก</button>
                                                 <button onClick={openpoint} className='bg-[#75C381] w-[333px] h-[90px] rounded-[24px] text-[45px] '>แลกพอยท์</button>
                                             </div>
