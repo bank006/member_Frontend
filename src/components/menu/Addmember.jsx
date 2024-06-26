@@ -2,6 +2,9 @@ import React from 'react'
 import { useState } from 'react'
 import axios from 'axios'
 import Success from '../success/Success'
+import { Player } from '@lottiefiles/react-lottie-player';
+import pills from '../img/pills.json'
+
 
 function Addmember({ closeaddmember }) {
     const [addmembershow, setaddmembershow] = useState(false)
@@ -13,7 +16,10 @@ function Addmember({ closeaddmember }) {
 
     const [user, setuser] = useState([])
 
+    const [loading, setLoading] = useState(false);
+
     const addmember = async () => {
+        setLoading(true);
         if (phonenum.length === 10) {
             try {
                 const data = {
@@ -35,6 +41,8 @@ function Addmember({ closeaddmember }) {
                 }
             } catch (error) {
                 console.log(error)
+            } finally {
+                setLoading(false)
             }
         } else {
             alert('Please enter a valid phone number')
@@ -56,7 +64,7 @@ function Addmember({ closeaddmember }) {
     }
     return (
         <div className='loading-overlay absolute inset-0 bg-slate-50 bg-opacity-80 flex items-center justify-center z-1 '>
-            {successaddmember && <Success message={"เพิ่มสมาชิกสำเร็จ"}  />}
+            {successaddmember && <Success message={"เพิ่มสมาชิกสำเร็จ"} />}
             {!addmembershow && <div className='bg-white w-[594px] h-[671px] drop-shadow-[16px_16px_0_rgba(0,0,0,0.4)] rounded-[24px] animate-scaleIn'>
                 <div className='h-full w-full flex justify-center p-[20px]'>
                     <div className='h-full w-[90%] text-center pt-[40px]'>
@@ -83,7 +91,13 @@ function Addmember({ closeaddmember }) {
                             </div>
                             <div className='flex justify-center w-full items-center'>
                                 <p className='text-[40px] mr-[35px]'>สะสม</p>
-                                <p className='text-[120px] text-[#FFB259]'>{user.point}</p>
+                                <p className='text-[120px] text-[#FFB259]'>{user.point || <Player
+                                    autoplay
+                                    loop
+                                    src={pills}
+                                    style={{ height: '70px', width: '70px' }}
+                                >
+                                </Player>}</p>
                                 <p className='text-[40px] ml-[35px]'>พอยท์</p>
                             </div>
                             <div className='flex justify-center mt-[80px]'>
@@ -105,6 +119,17 @@ function Addmember({ closeaddmember }) {
                     </div>
                 )}
 
+            </div>}
+            {loading && <div className="border absolute">
+                <div className="loading-overlay absolute inset-0 bg-white bg-opacity-80 flex items-center justify-center z-10">
+                    <Player
+                        autoplay
+                        loop
+                        src={pills}
+                        style={{ height: '300px', width: '300px' }}
+                    >
+                    </Player>
+                </div>
             </div>}
         </div>
     )

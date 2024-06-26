@@ -1,9 +1,11 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
+import { Player } from '@lottiefiles/react-lottie-player';
 
 import Error from '../error/Error'
 import Success from '../success/Success'
+import pills from '../img/pills.json'
 
 function Member({ closemember }) {
     const [uuid_user, setuuid_user] = useState('')
@@ -12,11 +14,13 @@ function Member({ closemember }) {
     const [addpoint, setaddpoint] = useState(false)
     const [error, set_Error] = useState(false)
     const [issuccess, set] = useState(false)
+    const [loading, setLoading] = useState(false);
     const [user, setuser] = useState([])
     const [exchangerate, setexchangerate] = useState('')
     const [resultrate, setresultrate] = useState('0')
 
     const handlelogin = async () => {
+        setLoading(true);
         try {
             const result = await axios.post('https://member-apis.vercel.app/users/api/v1/check_user', { phonenum })
             if (result.data) {
@@ -33,6 +37,8 @@ function Member({ closemember }) {
             setmembernum(!membernum)
             set_Error(true)
             console.error('login feild', error.message);
+        } finally {
+            setLoading(false)
         }
     }
 
@@ -45,6 +51,7 @@ function Member({ closemember }) {
     }
 
     const fechPoint = async (uuid) => {
+
         try {
             const result = await axios.post('https://member-apis.vercel.app/users/api/v1/get_userpoint', { uuid })
             setuser(result.data[0])
@@ -81,7 +88,7 @@ function Member({ closemember }) {
         <div className="loading-overlay absolute inset-0 bg-slate-50 bg-opacity-80 flex items-center justify-center z-1 ">
             <div className='flex w-full h-full  justify-center items-center'>
                 {error && <Error message={"ไม่ได้เป็นสมาชิก"} />}
-                {issuccess && <Success  message={"เพิ่มคะแนนสำเร็จ"}  />}
+                {issuccess && <Success message={"เพิ่มคะแนนสำเร็จ"} />}
                 {!membernum && <div className='bg-white w-[594px] h-[400px] drop-shadow-[16px_16px_0_rgba(0,0,0,0.4)] rounded-[24px] animate-scaleIn'>
                     <div className='h-full w-full flex justify-center p-[20px]'>
                         <div className='h-full w-[90%] text-center pt-[40px]'>
@@ -107,7 +114,13 @@ function Member({ closemember }) {
                                         </div>
                                         <div className='flex justify-center w-full items-center'>
                                             <p className='text-[40px] mr-[35px]'>สะสม</p>
-                                            <p className='text-[120px] text-[#FFB259]'>{parseInt(user.point) + parseInt(resultrate)}</p>
+                                            <p className='text-[120px] text-[#FFB259]'>{parseInt(user.point) + parseInt(resultrate) || <Player
+                                                autoplay
+                                                loop
+                                                src={pills}
+                                                style={{ height: '70px', width: '70px' }}
+                                            >
+                                            </Player>}</p>
                                             <p className='text-[40px] ml-[35px]'>พอยท์</p>
                                         </div>
                                         <div className='flex w-full justify-center'>
@@ -115,7 +128,7 @@ function Member({ closemember }) {
                                         </div>
                                     </div>) : (
                                         <>
-                                        <p className='text-[45px]'>ไม่มีคะแนนสะสม</p>
+                                            <p className='text-[45px]'>ไม่มีคะแนนสะสม</p>
                                         </>
                                     )}
                                     <div className='mt-[40px] h-[50%]'>
@@ -135,6 +148,17 @@ function Member({ closemember }) {
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>}
+                {loading && <div className="border absolute">
+                    <div className="loading-overlay absolute inset-0 bg-white bg-opacity-80 flex items-center justify-center z-10">
+                        <Player
+                            autoplay
+                            loop
+                            src={pills}
+                            style={{ height: '300px', width: '300px' }}
+                        >
+                        </Player>
                     </div>
                 </div>}
             </div>

@@ -3,6 +3,8 @@ import { useState } from 'react'
 import find from '../img/find.png'
 import Error from '../error/Error'
 import axios from 'axios'
+import { Player } from '@lottiefiles/react-lottie-player';
+import pills from '../img/pills.json'
 
 function Find({ closefind }) {
     const [phonenum, setphonenum] = useState("")
@@ -13,7 +15,9 @@ function Find({ closefind }) {
     const [showdata, setshowdata] = useState(false)
     const [showpoint, setshowpoint] = useState(false)
 
+    const [loading, setLoading] = useState(false);
     const handlelogin = async () => {
+        setLoading(true);
         try {
             const result = await axios.post('https://member-apis.vercel.app/users/api/v1/check_user', { phonenum })
             if (result.data) {
@@ -27,6 +31,8 @@ function Find({ closefind }) {
             set_errors(true)
             set_showfind(true)
             console.log('login feild', error.response.data.error);
+        } finally {
+            setLoading(false)
         }
     }
     const fechPoint = async (uuid) => {
@@ -49,7 +55,7 @@ function Find({ closefind }) {
     }
     return (
         <div className="loading-overlay absolute inset-0 bg-slate-50 bg-opacity-80 flex items-center justify-center z-1 ">
-            {errors && <Error message={"ไม่ได้เป็นสมาชิก"}  />}
+            {errors && <Error message={"ไม่ได้เป็นสมาชิก"} />}
             {!showfind && <div className='flex w-full h-full  justify-center items-center'>
                 <div className='bg-white w-[720px] h-[263px] drop-shadow-[16px_16px_0_rgba(0,0,0,0.4)] rounded-[24px] animate-scaleIn p-10 '>
                     <p className='text-center text-[35px] mt-[10px]'>กรุณากรอกเบอร์โทรสมาชิกสำหรับการค้นหา</p>
@@ -80,19 +86,37 @@ function Find({ closefind }) {
                                     {user ? (
                                         <>
                                             <div className='text-[35px] text-center mt-[100px]'>
-                                                <p>คุณ {user.fullname}</p>
-                                                <p>เบอร์โทร {user.phonenum}</p>
+                                                <p>คุณ {user.fullname || <Player
+                                                    autoplay
+                                                    loop
+                                                    src={pills}
+                                                    style={{ height: '70px', width: '70px' }}
+                                                >
+                                                </Player>}</p>
+                                                <p>เบอร์โทร {user.phonenum || <Player
+                                                    autoplay
+                                                    loop
+                                                    src={pills}
+                                                    style={{ height: '70px', width: '70px' }}
+                                                >
+                                                </Player>}</p>
                                             </div>
                                             <div className='flex justify-center w-full items-center'>
                                                 <p className='text-[40px] mr-[35px]'>สะสม</p>
-                                                <p className='text-[120px] text-[#FFB259]'>{user.point}</p>
+                                                <p className='text-[120px] text-[#FFB259]'>{user.point || <Player
+                                                    autoplay
+                                                    loop
+                                                    src={pills}
+                                                    style={{ height: '70px', width: '70px' }}
+                                                >
+                                                </Player>}</p>
                                                 <p className='text-[40px] ml-[35px]'>พอยท์</p>
                                             </div>
                                             <div className='flex w-full justify-center'>
                                                 <hr className='w-[100%] bg-black' />
                                             </div>
                                             <div className='flex justify-center mt-[50px]'>
-                                            <button onClick={reload} className='bg-[#FF9292] w-[333px] h-[90px] rounded-[24px] text-[45px] mr-[15px] '>ยกเลิก</button>
+                                                <button onClick={reload} className='bg-[#FF9292] w-[333px] h-[90px] rounded-[24px] text-[45px] mr-[15px] '>ยกเลิก</button>
                                                 <button onClick={openpoint} className='bg-[#75C381] w-[333px] h-[90px] rounded-[24px] text-[45px] '>แลกพอยท์</button>
                                             </div>
                                         </>
@@ -139,6 +163,17 @@ function Find({ closefind }) {
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>}
+            {loading && <div className="border absolute">
+                <div className="loading-overlay absolute inset-0 bg-white bg-opacity-80 flex items-center justify-center z-10">
+                    <Player
+                        autoplay
+                        loop
+                        src={pills}
+                        style={{ height: '300px', width: '300px' }}
+                    >
+                    </Player>
                 </div>
             </div>}
         </div>
