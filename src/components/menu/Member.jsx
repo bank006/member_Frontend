@@ -18,7 +18,7 @@ function Member({ closemember }) {
 
     const handlelogin = async () => {
         try {
-            const result = await axios.post('http://localhost:3003/users/api/v1/check_user', { phonenum })
+            const result = await axios.post('https://member-apis.vercel.app/users/api/v1/check_user', { phonenum })
             if (result.data) {
                 setmembernum(true)
                 setaddpoint(true)
