@@ -22,7 +22,7 @@ function Addmember({ closeaddmember }) {
                         phonenum: phonenum
                     }
                 };
-                const result = await axios.post('http://localhost:3003/users/api/v1/create_user', data)
+                const result = await axios.post('https://member-apis.vercel.app/users/api/v1/create_user', data)
                 if (result.data.rows.length === 0) {
                     console.log(result)
                     setaddmembershow(true)
@@ -44,7 +44,7 @@ function Addmember({ closeaddmember }) {
 
     const fechPoint = async (uuid) => {
         try {
-            const result = await axios.post('http://localhost:3003/users/api/v1/get_userpoint', { uuid })
+            const result = await axios.post('https://member-apis.vercel.app/users/api/v1/get_userpoint', { uuid })
             setuser(result.data[0])
         } catch (error) {
             console.error('feched point user feild', error.message);

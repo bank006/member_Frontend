@@ -15,7 +15,7 @@ function Find({ closefind }) {
 
     const handlelogin = async () => {
         try {
-            const result = await axios.post('http://localhost:3003/users/api/v1/check_user', { phonenum })
+            const result = await axios.post('https://member-apis.vercel.app/users/api/v1/check_user', { phonenum })
             if (result.data) {
                 console.log(result.data)
                 fechPoint(result.data[0].uuid)
@@ -31,7 +31,7 @@ function Find({ closefind }) {
     }
     const fechPoint = async (uuid) => {
         try {
-            const result = await axios.post('http://localhost:3003/users/api/v1/get_userpoint', { uuid })
+            const result = await axios.post('https://member-apis.vercel.app/users/api/v1/get_userpoint', { uuid })
             setuser(result.data[0])
         } catch (error) {
             console.error('feched point user feild', error.message);
