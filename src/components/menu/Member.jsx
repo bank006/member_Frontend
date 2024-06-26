@@ -37,7 +37,7 @@ function Member({ closemember }) {
     }
 
     const fechexchage = () => {
-        axios.get('http://localhost:3003/exchange/api/v1/get_exchange').then((data) => {
+        axios.get('https://member-apis.vercel.app/exchange/api/v1/get_exchange').then((data) => {
             setexchangerate(data.data[0].price / data.data[0].rate)
         }).catch(() => {
             console.error('feched exchange feild', error.message);
@@ -46,7 +46,7 @@ function Member({ closemember }) {
 
     const fechPoint = async (uuid) => {
         try {
-            const result = await axios.post('http://localhost:3003/users/api/v1/get_userpoint', { uuid })
+            const result = await axios.post('https://member-apis.vercel.app/users/api/v1/get_userpoint', { uuid })
             setuser(result.data[0])
         } catch (error) {
             console.error('feched point user feild', error.message);
@@ -65,7 +65,7 @@ function Member({ closemember }) {
 
         if (resultrate > 0) {
             try {
-                const result = await axios.post('http://localhost:3003/point/api/v1/create_point', { data })
+                const result = await axios.post('https://member-apis.vercel.app/point/api/v1/create_point', { data })
                 set(true)
                 setaddpoint(false)
             } catch (error) {
