@@ -4,7 +4,7 @@ import member from '../img/member.png'
 import addmember from '../img/addmember.png'
 import find from '../img/find.png'
 import voucher from '../img/voucher.png'
-function Menus({openmember , openaddmember}) {
+function Menus({openmember , openaddmember , openfind}) {
     return (
         <div className='bg-[#ADADAD] h-full w-full'>
             <div className='h-[60%] w-full flex justify-center'>
@@ -13,7 +13,7 @@ function Menus({openmember , openaddmember}) {
                         <div className='w-full h-full flex justify-center'>
                             <div className=' w-full h-full'>
                                 <div className=' flex justify-center items-center w-full h-[70%] ipadpro:h-[80%] '>
-                                    <img src={member} alt="" className='w-[137px] h-[89px] ipadpro:w-[237px] ipadpro:h-[170px]' />
+                                    <img src={member} alt="" className='w-[137px] h-[89px] ipadpro:w-[230px] ipadpro:h-[160px]' />
                                 </div>
                                 <div className='text-[50px] text-center'>
                                     <p>สมาชิก</p>
@@ -25,7 +25,7 @@ function Menus({openmember , openaddmember}) {
                         <div className='w-full h-full flex justify-center'>
                             <div className=' w-full h-full'>
                                 <div className=' flex justify-center items-center w-full h-[70%] ipadpro:h-[80%] '>
-                                    <img src={addmember} alt="" className='w-[116px] h-[99px] ipadpro:w-[216px] ipadpro:h-[180px]' />
+                                    <img src={addmember} alt="" className='w-[116px] h-[99px] ipadpro:w-[180px] ipadpro:h-[160px]' />
                                 </div>
                                 <div className='text-[50px] text-center'>
                                     <p>เพิ่มสมาชิก</p>
@@ -33,11 +33,11 @@ function Menus({openmember , openaddmember}) {
                             </div>
                         </div>
                     </div>
-                    <div className='bg-[#D9D9D9] p-3 w-[304px] h-[278px] ipadpro:w-[400px] ipadpro:h-[378px] rounded-[24px]' >
+                    <div onClick={openfind} className='bg-[#D9D9D9] p-3 w-[304px] h-[278px] ipadpro:w-[400px] ipadpro:h-[378px] rounded-[24px]' >
                         <div className='w-full h-full flex justify-center'>
                             <div className=' w-full h-full'>
                                 <div className=' flex justify-center items-center w-full h-[70%] ipadpro:h-[80%] '>
-                                    <img src={find} alt="" className='w-[102px] h-[108px] ipadpro:w-[202px] ipadpro:h-[208px]' />
+                                    <img src={find} alt="" className='w-[102px] h-[108px] ipadpro:w-[180px] ipadpro:h-[170px]' />
                                 </div>
                                 <div className='text-[50px] text-center'>
                                     <p>ค้นหา</p>
@@ -49,7 +49,7 @@ function Menus({openmember , openaddmember}) {
                         <div className='w-full h-full flex justify-center'>
                             <div className=' w-full h-full'>
                                 <div className=' flex justify-center items-center w-full h-[70%] ipadpro:h-[80%] '>
-                                    <img src={voucher} alt="" className='w-[135px] h-[68px] ipadpro:w-[235px] ipadpro:h-[168px]' />
+                                    <img src={voucher} alt="" className='w-[135px] h-[68px] ipadpro:w-[200px] ipadpro:h-[150px]' />
                                 </div>
                                 <div className='text-[50px] text-center'>
                                     <p>โปรโมชั่น</p>

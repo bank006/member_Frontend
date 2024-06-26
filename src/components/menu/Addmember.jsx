@@ -6,7 +6,7 @@ import Success from '../success/Success'
 function Addmember({ closeaddmember }) {
     const [addmembershow, setaddmembershow] = useState(false)
     const [oldmember, setoldmember] = useState(false)
-    const [successaddmember , setsuccessaddmember] = useState(false)
+    const [successaddmember, setsuccessaddmember] = useState(false)
 
     const [fullname, setfullname] = useState('')
     const [phonenum, setphonenum] = useState("")
@@ -51,7 +51,7 @@ function Addmember({ closeaddmember }) {
         }
     }
 
-    const reload = ()=>{
+    const reload = () => {
         window.location.reload();
     }
     return (
@@ -73,23 +73,38 @@ function Addmember({ closeaddmember }) {
                 </div>
             </div>}
             {oldmember && <div className='bg-white w-[594px] h-[700px] rounded-[24px] drop-shadow-[16px_16px_0_rgba(0,0,0,0.4)]'>
-                <div className='h-full w-full' >   
-                    <div className='text-center h-full w-full mt-[100px]'>
-                        <p className='text-[45px]'>เป็นสมาชิกอยู่แล้ว</p>
-                        <div className='text-[35px] mt-[40px]'>
-                            <p>คุณ {user.fullname}</p>
-                            <p>เบอร์โทรศัพท์ {user.phonenum}</p>
+                {user ? (
+                    <div className='h-full w-full' >
+                        <div className='text-center h-full w-full mt-[100px]'>
+                            <p className='text-[45px]'>เป็นสมาชิกอยู่แล้ว</p>
+                            <div className='text-[35px] mt-[40px]'>
+                                <p>คุณ {user.fullname}</p>
+                                <p>เบอร์โทรศัพท์ {user.phonenum}</p>
+                            </div>
+                            <div className='flex justify-center w-full items-center'>
+                                <p className='text-[40px] mr-[35px]'>สะสม</p>
+                                <p className='text-[120px] text-[#FFB259]'>{user.point}</p>
+                                <p className='text-[40px] ml-[35px]'>พอยท์</p>
+                            </div>
+                            <div className='flex justify-center mt-[80px]'>
+                                <button onClick={reload} className='bg-[#75C381] w-[203px] h-[101px] rounded-[24px] text-[45px] '>ตกลง</button>
+                            </div>
                         </div>
-                        <div className='flex justify-center w-full items-center'>
-                            <p className='text-[40px] mr-[35px]'>สะสม</p>
-                            <p className='text-[120px] text-[#FFB259]'>{user.point}</p>
-                            <p className='text-[40px] ml-[35px]'>พอยท์</p>
+                    </div>
+                ) : (
+                    <div className='h-[50%] w-full ' >
+                        <div className='flex justify-center items-center h-full w-full'>
+                            <div className=''>
+                                <p className='w-full text-center text-[45px]'>เป็นสมาชิกอยู่แล้ว</p>
+                                <p className='w-full text-center text-[45px]'>ไม่มีพอยน์สะสม</p>
+                            </div>
                         </div>
                         <div className='flex justify-center mt-[80px]'>
                             <button onClick={reload} className='bg-[#75C381] w-[203px] h-[101px] rounded-[24px] text-[45px] '>ตกลง</button>
                         </div>
                     </div>
-                </div>
+                )}
+
             </div>}
         </div>
     )
