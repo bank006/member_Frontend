@@ -1,10 +1,15 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import member from '../img/member.png'
 import addmember from '../img/addmember.png'
 import find from '../img/find.png'
 import voucher from '../img/voucher.png'
 function Menus({openmember , openaddmember , openfind}) {
+    const navigate = useNavigate()
+    const Navigatelogin = ()=>{
+        navigate('/login')
+    }
     return (
         <div className='bg-[#ADADAD] h-full w-full'>
             <div className='h-[60%] w-full flex justify-center'>
@@ -52,7 +57,7 @@ function Menus({openmember , openaddmember , openfind}) {
                                     <img src={voucher} alt="" className='w-[135px] h-[68px] ipadpro:w-[200px] ipadpro:h-[150px]' />
                                 </div>
                                 <div className='text-[50px] text-center'>
-                                    <p>โปรโมชั่น</p>
+                                    <p onClick={Navigatelogin}>โปรโมชั่น</p>
                                 </div>
                             </div>
                         </div>

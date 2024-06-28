@@ -61,7 +61,7 @@ function Home() {
                                 autoplay
                                 loop
                                 src={pills}
-                                style={{ height: '300px', width: '300px' }}
+                                style={{ height: '300px', width: '200px' }}
                             >
                             </Player>
                         </div>
