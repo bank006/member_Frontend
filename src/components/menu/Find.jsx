@@ -6,8 +6,9 @@ import axios from 'axios'
 import { Player } from '@lottiefiles/react-lottie-player';
 import pills from '../img/pills.json'
 
-function Find({ closefind }) {
-    const [phonenum, setphonenum] = useState("")
+function Find({ phonenum  , closefind }) {
+    const { phonenum: phoneNumber } = phonenum;
+    const [phonenumsx, setphonenum] = useState("")
     const [user, setuser] = useState([])
 
     const [errors, set_errors] = useState(false)
@@ -19,6 +20,7 @@ function Find({ closefind }) {
     const handlelogin = async () => {
         setLoading(true);
         try {
+            phonenum = phoneNumber
             const result = await axios.post('https://member-apis.vercel.app/users/api/v1/check_user', { phonenum })
             if (result.data) {
                 console.log(result.data)
@@ -58,13 +60,10 @@ function Find({ closefind }) {
             {errors && <Error message={"ไม่ได้เป็นสมาชิก"} />}
             {!showfind && <div className='flex w-full h-full  justify-center items-center'>
                 <div className='bg-white w-[720px] h-[263px] drop-shadow-[16px_16px_0_rgba(0,0,0,0.4)] rounded-[24px] animate-scaleIn p-10 '>
-                    <p className='text-center text-[35px] mt-[10px]'>กรุณากรอกเบอร์โทรสมาชิกสำหรับการค้นหา</p>
-                    <div className='flex w-[100%]  h-[70%] items-center justify-center'>
-                        <input onChange={(e) => setphonenum(e.target.value)} type="number" inputmode="numeric"  className='border border-black rounded-[50px] w-[505px] h-[80px] text-[30px] pl-[20px] outline-none' placeholder='exp:065-xxx-xxx' />
-                        <img onClick={handlelogin} src={find} alt="" className='w-[67px] h-[61px] m-5' />
-                    </div>
+                    <p className='text-center text-[35px] mt-[10px]'>กรุณาตกลงเพื่อทำการใช้ โปรโมชั่น</p>
                     <div className='flex justify-center mt-[50px]'>
                         <button onClick={closefind} className='bg-[#FF9292] hover:bg-[#f45353] w-[173px] h-[71px] text-[40px] rounded-[24px] mr-[12px]'>ยกเลิก</button>
+                        <button onClick={handlelogin} className='bg-[#75C381] w-[173px] h-[71px] rounded-[24px] text-[40px] '>ตกลง</button>
                     </div>
                 </div>
             </div>}

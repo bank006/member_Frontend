@@ -20,9 +20,8 @@ function Login() {
         setLoading(true);
         axios.post('https://member-apis.vercel.app/login', { username, password }).then((res) => {
             if (res.data.status == "success") {
-                const tell = '065'
                 setLoading(false)
-                navigate('/home' ,{state :{tell}})
+                navigate('/setuser')
             } 
         }).catch((err) => {
             set_loginshow(false)

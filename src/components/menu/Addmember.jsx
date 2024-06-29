@@ -45,6 +45,7 @@ function Addmember({ closeaddmember }) {
                 setLoading(false)
             }
         } else {
+            setLoading(false)
             alert('Please enter a valid phone number')
         }
 

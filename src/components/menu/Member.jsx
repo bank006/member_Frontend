@@ -2,15 +2,15 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { Player } from '@lottiefiles/react-lottie-player';
-import { useLocation } from 'react-router-dom';
 
 import Error from '../error/Error'
 import Success from '../success/Success'
 import pills from '../img/pills.json'
 
-function Member({ closemember }) {
+function Member({ phonenum, closemember }) {
+    const { phonenum: phoneNumber } = phonenum;
     const [uuid_user, setuuid_user] = useState('')
-    const [phonenum, setNumber] = useState("")
+    const [phonenums, setNumber] = useState("")
     const [membernum, setmembernum] = useState(false)
     const [addpoint, setaddpoint] = useState(false)
     const [error, set_Error] = useState(false)
@@ -20,13 +20,12 @@ function Member({ closemember }) {
     const [exchangerate, setexchangerate] = useState('')
     const [resultrate, setresultrate] = useState('0')
 
-    const location = useLocation
-
-    const tells = location.state?.tell
+    console.log(phoneNumber)
 
     const handlelogin = async () => {
         setLoading(true);
         try {
+            phonenum = phoneNumber
             const result = await axios.post('https://member-apis.vercel.app/users/api/v1/check_user', { phonenum })
             if (result.data) {
                 setmembernum(true)
@@ -47,7 +46,7 @@ function Member({ closemember }) {
         }
     }
 
-    console.log(tells)
+
 
     const fechexchage = () => {
         axios.get('https://member-apis.vercel.app/exchange/api/v1/get_exchange').then((data) => {
@@ -58,7 +57,6 @@ function Member({ closemember }) {
     }
 
     const fechPoint = async (uuid) => {
-
         try {
             const result = await axios.post('https://member-apis.vercel.app/users/api/v1/get_userpoint', { uuid })
             setuser(result.data[0])
@@ -89,6 +87,7 @@ function Member({ closemember }) {
                 setLoading(false)
             }
         } else {
+            setLoading(false)
             console.log('error')
         }
 
@@ -101,11 +100,11 @@ function Member({ closemember }) {
                 {issuccess && <Success message={"เพิ่มคะแนนสำเร็จ"} />}
                 {!membernum && <div className='bg-white w-[594px] h-[400px] drop-shadow-[16px_16px_0_rgba(0,0,0,0.4)] rounded-[24px] animate-scaleIn'>
                     <div className='h-full w-full flex justify-center p-[20px]'>
-                        <div className='h-full w-[90%] text-center pt-[40px]'>
-                            <p className='text-[40px]'>กรุณากรอกเบอร์โทร</p>
-                            <div>
+                        <div className='h-full w-[90%] text-center pt-[60px] mt-[30px]'>
+                            <p className='text-[40px]'>กดตกลงเพื่อเพิ่มพอยท์</p>
+                            {/* <div>
                                 <input onChange={(e) => setNumber(e.target.value)} placeholder='exp:065-xxx-xxx' type="number" pattern="[0-9]*" className='pl-[20px] border border-black rounded-[50px] w-[90%] h-[80px] outline-none  mt-[50px] text-[30px]' />
-                            </div>
+                            </div> */}
                             <div className='flex justify-center mt-[50px] mb-[30px]'>
                                 <button onClick={closemember} className='bg-[#FF9292] hover:bg-[#f45353] w-[173px] h-[71px] text-[40px] rounded-[24px] mr-[12px]'>ยกเลิก</button>
                                 <button onClick={handlelogin} className='bg-[#75C381] w-[173px] h-[71px] rounded-[24px] text-[40px] '>ตกลง</button>
