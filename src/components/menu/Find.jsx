@@ -68,14 +68,14 @@ function Find({ phonenum  , closefind }) {
                 </div>
             </div>}
             {showdata && <div className='flex w-full h-full  justify-center items-center'>
-                <div className='bg-white w-[720px] h-[1071px] drop-shadow-[16px_16px_0_rgba(0,0,0,0.4)] rounded-[24px] animate-scaleIn p-10 '>
+                <div className='bg-white w-[620px] h-[771px] drop-shadow-[16px_16px_0_rgba(0,0,0,0.4)] rounded-[24px] animate-scaleIn p-10 '>
                     <div className='h-full w-full '>
                         <div className='h-[50%] w-full'>
-                            <p className='text-center text-[35px] mt-[10px] mb-[50px]'>กรุณากรอกเบอร์โทรสมาชิกสำหรับการค้นหา</p>
-                            <div className='flex w-[100%]  h-[30%] items-center justify-center mb-[50px]'>
+                            {/* <p className='text-center text-[35px] mt-[10px] mb-[50px]'>กรุณากรอกเบอร์โทรสมาชิกสำหรับการค้นหา</p> */}
+                            {/* <div className='flex w-[100%]  h-[30%] items-center justify-center mb-[50px]'>
                                 <input onChange={(e) => setphonenum(e.target.value)} type="number" className='border border-black rounded-[50px] w-[505px] h-[80px] text-[30px] pl-[20px] outline-none' placeholder='exp:065-xxx-xxx' />
                                 <img onClick={handlelogin} src={find} alt="" className='w-[67px] h-[61px] m-5' />
-                            </div>
+                            </div> */}
                             <p className='text-[30px]'>ผลการค้นหา</p>
                             <div className='flex w-full justify-center mt-[30px]'>
                                 <hr className='w-[100%] bg-black' />
