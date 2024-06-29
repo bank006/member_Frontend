@@ -2,6 +2,7 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { Player } from '@lottiefiles/react-lottie-player';
+import { useLocation } from 'react-router-dom';
 
 import Error from '../error/Error'
 import Success from '../success/Success'
@@ -18,6 +19,10 @@ function Member({ closemember }) {
     const [user, setuser] = useState([])
     const [exchangerate, setexchangerate] = useState('')
     const [resultrate, setresultrate] = useState('0')
+
+    const location = useLocation
+
+    const tells = location.state?.tell
 
     const handlelogin = async () => {
         setLoading(true);
@@ -41,6 +46,8 @@ function Member({ closemember }) {
             setLoading(false)
         }
     }
+
+    console.log(tells)
 
     const fechexchage = () => {
         axios.get('https://member-apis.vercel.app/exchange/api/v1/get_exchange').then((data) => {
@@ -146,8 +153,6 @@ function Member({ closemember }) {
                                             <button onClick={updateuserpoint} className='bg-[#75C381] w-[173px] h-[71px] rounded-[24px] text-[40px] '>ตกลง</button>
                                         </div>
                                     </div>
-
-
                                 </div>
                             </div>
                         </div>
