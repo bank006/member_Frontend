@@ -6,9 +6,10 @@ import axios from 'axios'
 import { Player } from '@lottiefiles/react-lottie-player';
 import pills from '../img/pills.json'
 
-function Find({ phonenum  , closefind }) {
+function Find({ phonenum, closefind }) {
     const { phonenum: phoneNumber } = phonenum;
     const [phonenumsx, setphonenum] = useState("")
+    const [promotion, setpromotion] = useState("")
     const [user, setuser] = useState([])
 
     const [errors, set_errors] = useState(false)
@@ -46,11 +47,22 @@ function Find({ phonenum  , closefind }) {
         }
     }
 
-    const openpoint = () => {
-        setshowpoint(true)
-        setshowdata(false)
-        set_showfind(true)
+    const openpoint = async () => {
+        try {
+            const point = parseInt(user.point)
+            console.log(point)
+            const result = await axios.post('http://localhost:3003/promotion/api/v1/get_promotions', { point })
+            setpromotion(result.data)
+            setshowpoint(true)
+            setshowdata(false)
+            set_showfind(true)
+        } catch (error) {
+            console.log(error)
+        }
+
     }
+
+    console.log(!promotion)
 
     const reload = () => {
         window.location.reload()
@@ -155,6 +167,18 @@ function Find({ phonenum  , closefind }) {
                                     <div className='flex w-full justify-center'>
                                         <hr className='w-[100%] bg-black' />
                                     </div>
+                                    {promotion ? (<div>
+                                        {promotion.map((data, indax) => (
+                                            <div className='flex justify-between text-[35px]'>
+                                                <p>{data.title}</p>
+                                                <p>ใช้โปรโมชั่น</p>
+                                            </div>
+                                        ))}
+                                    </div>) : (
+                                        <div >
+                                            <p>ไม่มีโปรโมชั่นที่ท่านสามารถใช้ได้</p>
+                                        </div>
+                                    )}
                                     <div className='flex justify-center mt-[50px]'>
                                         <button onClick={reload} className='bg-[#75C381] w-[363px] h-[131px] rounded-[24px] text-[45px] '>แลกพอยท์</button>
                                     </div>

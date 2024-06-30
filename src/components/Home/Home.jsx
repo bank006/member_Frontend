@@ -64,14 +64,7 @@ function Home() {
     }
 
 
-    const fechPoint = async (uuid) => {
-        try {
-            const result = await axios.post('https://member-apis.vercel.app/users/api/v1/get_userpoint', { uuid })
-            setuser(result.data[0])
-        } catch (error) {
-            console.error('feched point user feild', error.message);
-        }
-    }
+   
 
     useEffect(() => {
         axios.post('https://member-apis.vercel.app/users/api/v1/check_user', { phonenum }).then((data) => {
@@ -81,16 +74,25 @@ function Home() {
         })
     }, [])
 
+    const fechPoint = async (uuid) => {
+        try {
+            const result = await axios.post('https://member-apis.vercel.app/users/api/v1/get_userpoint', { uuid })
+            setuser(result.data[0])
+        } catch (error) {
+            console.error('feched point user feild', error.message);
+        }
+    }
+
 
     return (
         <div className='bg-[#ADADAD] h-screen w-screen p-5 pt-[30px]'>
             <div className='flex items-center justify-between'>
                 <p onClick={back1} className='text-[50px]'> กลับ </p>
-                <div className='text-[50px] flex'>
+                {/* <div className='text-[50px] flex'>
                     <p>ผู้ใช้ {user.fullname} มี </p>
                     <p className='ml-[10px] text-[#FFB259]'>{user.point} </p>
                     <p className='ml-[10px]'> คะแนน </p>
-                </div>
+                </div> */}
             </div>
             <div className='h-[90%] w-full flex justify-center'>
                 <div className='flex h-full w-full justify-center mt-[40px]  '>
