@@ -80,7 +80,7 @@ function Addpromotion({ closeshowpromo }) {
             title: titleedit,
             point: pointedit
         }
-        axios.post('http://localhost:3003/promotion/api/v1/edite_promotion', { data }).then((res) => {
+        axios.post('https://member-apis.vercel.app/promotion/api/v1/edite_promotion', { data }).then((res) => {
             console.log(res)
             setedit(false)
             set(true)
@@ -96,7 +96,7 @@ function Addpromotion({ closeshowpromo }) {
             point: pointedit
         }
         setLoading(true)
-        axios.post('http://localhost:3003/promotion/api/v1/create_promotion' , {data}).then((res)=>{
+        axios.post('https://member-apis.vercel.app/promotion/api/v1/create_promotion' , {data}).then((res)=>{
             set(true)
             setLoading(false)
             window.location.reload()
@@ -107,7 +107,7 @@ function Addpromotion({ closeshowpromo }) {
 
     const deletepromotion = (uuid) => {
         setLoading(true)
-        axios.delete('http://localhost:3003/promotion/api/v1/delete_promotions', {
+        axios.delete('https://member-apis.vercel.app/promotion/api/v1/delete_promotions', {
             data: { uuid_promotion: uuid }
         }).then((res) => {
 
