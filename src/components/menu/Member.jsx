@@ -20,8 +20,6 @@ function Member({ phonenum, closemember }) {
     const [exchangerate, setexchangerate] = useState('')
     const [resultrate, setresultrate] = useState('0')
 
-    console.log(phoneNumber)
-
     const handlelogin = async () => {
         setLoading(true);
         try {

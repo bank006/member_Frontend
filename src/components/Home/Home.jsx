@@ -62,10 +62,7 @@ function Home() {
     const back1 = () => {
         navigate(-1)
     }
-
-
-   
-
+    
     useEffect(() => {
         axios.post('https://member-apis.vercel.app/users/api/v1/check_user', { phonenum }).then((data) => {
             fechPoint(data.data[0].uuid)

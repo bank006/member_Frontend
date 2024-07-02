@@ -5,12 +5,14 @@ import Error from '../error/Error'
 import axios from 'axios'
 import { Player } from '@lottiefiles/react-lottie-player';
 import pills from '../img/pills.json'
+import Success from '../success/Success'
 
 function Find({ phonenum, closefind }) {
     const { phonenum: phoneNumber } = phonenum;
     const [phonenumsx, setphonenum] = useState("")
     const [promotion, setpromotion] = useState("")
     const [user, setuser] = useState([])
+    const [issuccess, set] = useState(false)
 
     const [errors, set_errors] = useState(false)
     const [showfind, set_showfind] = useState(false)
@@ -18,6 +20,8 @@ function Find({ phonenum, closefind }) {
     const [showpoint, setshowpoint] = useState(false)
 
     const [loading, setLoading] = useState(false);
+
+    const [voucherpoint, setvoucherpoint] = useState([])
     const handlelogin = async () => {
         setLoading(true);
         try {
@@ -50,8 +54,7 @@ function Find({ phonenum, closefind }) {
     const openpoint = async () => {
         try {
             const point = parseInt(user.point)
-            console.log(point)
-            const result = await axios.post('http://localhost:3003/promotion/api/v1/get_promotions', { point })
+            const result = await axios.get('https://member-apis.vercel.app/promotion/api/v1/get_promotions')
             setpromotion(result.data)
             setshowpoint(true)
             setshowdata(false)
@@ -62,14 +65,56 @@ function Find({ phonenum, closefind }) {
 
     }
 
-    console.log(!promotion)
-
     const reload = () => {
         window.location.reload()
     }
+
+    const [pointchange, setpointchange] = useState(0);
+
+    const [selectedPromotions, setSelectedPromotions] = useState([]);
+
+    const usepromotion = (data) => {
+        if (selectedPromotions.some(promo => promo.id === data.id)) {
+            // If the promotion is already selected, remove it and refund the points
+            setSelectedPromotions(prevPromotions => prevPromotions.filter(promo => promo.id !== data.id));
+            setpointchange(prevTotal => prevTotal - parseInt(data.point));
+            setuser(prevUser => ({
+                ...prevUser,
+                point: prevUser.point + parseInt(data.point)
+            }));
+        } else if (user.point >= data.point) {
+            // If the promotion is not selected, add it and deduct the points
+            setSelectedPromotions(prevPromotions => [...prevPromotions, data]);
+            setpointchange(prevTotal => prevTotal + parseInt(data.point));
+            setuser(prevUser => ({
+                ...prevUser,
+                point: prevUser.point - parseInt(data.point)
+            }));
+        }
+    };
+
+    const isafterusepoint = async ()=>{
+        const data = {
+            uuid_user : user.uuid_user,
+            point : user.point
+        }
+        // console.log(data)
+        setLoading(true);
+        try{
+            
+            const result  = await axios.post('https://member-apis.vercel.app/point/api/v1/update_point',{ data } )
+            setLoading(false);
+            setshowpoint(false)
+            set(true)
+        }catch(error){
+            console.log(error)
+        }
+    }
+
     return (
         <div className="loading-overlay absolute inset-0 bg-slate-50 bg-opacity-80 flex items-center justify-center z-1 ">
             {errors && <Error message={"ไม่ได้เป็นสมาชิก"} />}
+            {issuccess && <Success message={"ใช้โปรโมชั่นสำเร็จ"} />}
             {!showfind && <div className='flex w-full h-full  justify-center items-center'>
                 <div className='bg-white w-[720px] h-[263px] drop-shadow-[16px_16px_0_rgba(0,0,0,0.4)] rounded-[24px] animate-scaleIn p-10 '>
                     <p className='text-center text-[35px] mt-[10px]'>กรุณาตกลงเพื่อทำการใช้ โปรโมชั่น</p>
@@ -167,11 +212,22 @@ function Find({ phonenum, closefind }) {
                                     <div className='flex w-full justify-center'>
                                         <hr className='w-[100%] bg-black' />
                                     </div>
-                                    {promotion ? (<div>
+                                    {promotion ? (<div className=' overflow-scroll h-[400px]'>
                                         {promotion.map((data, indax) => (
-                                            <div className='flex justify-between text-[35px]'>
-                                                <p>{data.title}</p>
-                                                <p>ใช้โปรโมชั่น</p>
+                                            <div key={indax} className={`mb-[20px] flex justify-between promotion-item p-4 rounded-lg shadow ${user.point >= data.point ? 'bg-white text-black' : 'bg-gray-200 text-gray-500'}`} >
+                                                <div className='flex justify-between items-center w-full'>
+                                                    <div className='text-[35px]'>
+                                                        <p>{data.title}</p>
+                                                        <p>ใช้ {data.point} พอยท์</p>
+                                                    </div>
+                                                    <button
+                                                        onClick={() => usepromotion(data)}
+                                                        className={`text-[35px] ${user.point < data.point && !selectedPromotions.some(promo => promo.id === data.id) ? 'cursor-not-allowed text-red' : ''}`}
+                                                        disabled={user.point < data.point && !selectedPromotions.some(promo => promo.id === data.id)}
+                                                    >
+                                                        {selectedPromotions.some(promo => promo.id === data.id) ? 'ยกเลิก' : 'ใช้'}
+                                                    </button>
+                                                </div>
                                             </div>
                                         ))}
                                     </div>) : (
@@ -180,7 +236,7 @@ function Find({ phonenum, closefind }) {
                                         </div>
                                     )}
                                     <div className='flex justify-center mt-[50px]'>
-                                        <button onClick={reload} className='bg-[#75C381] w-[363px] h-[131px] rounded-[24px] text-[45px] '>แลกพอยท์</button>
+                                        <button onClick={isafterusepoint} className='bg-[#75C381] w-[363px] h-[131px] rounded-[24px] text-[45px] '>แลกพอยท์</button>
                                     </div>
                                 </div>
                             </div>
