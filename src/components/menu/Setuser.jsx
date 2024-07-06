@@ -19,11 +19,41 @@ function Setuser() {
     const [phonenum, setNumber] = useState('')
 
     const [loading, setLoading] = useState(false);
-    const [openline , setopenline]= useState(false)
+    const [openline, setopenline] = useState(false)
     const [showaddmember, setshowaddmember] = useState(false)
     const [membernum, setmembernum] = useState(false)
     const [error, set_Error] = useState(false)
     const [showpromo, setshowpromo] = useState(false)
+
+
+    const [messageline, set_messageline] = useState('')
+
+
+    const CHANNEL_ACCESS_TOKEN = '7ceIuW+fHooH4m7ps1ANjRCaIX0Bz6jd6I4m3m4+1C0Q5+jcsTYp0PgmajHYkb0ep0I0gYzgwLH1y01OBP6jeZrm3Sn8dtCxUNMa9nGQr0YrwSPFIC2qsGzIsw9A6e7Y85wsw7JUczMbRTjEm+4j+wdB04t89/1O/w1cDnyilFU=';  // เปลี่ยนเป็น Channel Access Token ของคุณ
+    const BROADCAST_API_URL = 'https://api.line.me/v2/bot/message/broadcast';
+    const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + CHANNEL_ACCESS_TOKEN
+    }
+
+    const messages = {
+        "messages": [
+            {
+                "type": "text",
+                "text": messageline
+            }
+        ]
+    }
+
+    const sendline = () => {
+        setLoading(true);
+        axios.post('https://member-apis.vercel.app/promotion/api/v1/sendline', messages).then((data) => {
+            setLoading(false);
+            window.location.reload();
+        }).catch((err) => {
+            console.log(err)
+        })
+    }
 
     const handleClickaddMember = () => {
         setLoading(true);
@@ -36,8 +66,15 @@ function Setuser() {
         setshowaddmember(false);
     }
 
+    const [allusers, setallusers] = useState([])
+
     const handlesetUser = () => {
         setmembernum(true)
+        axios.get('https://member-apis.vercel.app/users/api/v1/get_users').then((data) => {
+            setallusers(data.data.rows)
+        }).catch((err) => {
+            console.log(err)
+        })
     }
 
     const hadlecloseUser = () => {
@@ -52,10 +89,10 @@ function Setuser() {
         setshowpromo(false)
     }
 
-    const openLine =()=>{
+    const openLine = () => {
         setopenline(true)
     }
-    const closeLine = ()=>{
+    const closeLine = () => {
         setopenline(false)
     }
 
@@ -128,8 +165,8 @@ function Setuser() {
                 {membernum &&
                     <div className='border absolute w-screen h-screen'>
                         <div className='flex h-full justify-center items-center'>
-                            <div className='bg-white w-[594px] h-[400px] drop-shadow-[16px_16px_0_rgba(0,0,0,0.4)] rounded-[24px] animate-scaleIn'>
-                                <div className='h-full w-full flex justify-center p-[20px]'>
+                            <div className='bg-white w-[594px] h-[1000px] drop-shadow-[16px_16px_0_rgba(0,0,0,0.4)] rounded-[24px] animate-scaleIn'>
+                                <div className='h-[40%] w-full flex justify-center p-[20px]'>
                                     <div className='h-full w-[90%] text-center pt-[40px]'>
                                         <p className='text-[40px]'>กรุณากรอกเบอร์โทร</p>
                                         <div>
@@ -140,6 +177,27 @@ function Setuser() {
                                             <button onClick={hadleLogin} className='bg-[#75C381] w-[173px] h-[71px] rounded-[24px] text-[40px] '>ตกลง</button>
                                         </div>
                                     </div>
+
+                                </div>
+                                <hr />
+                                <div className='flex justify-center p-5 h-[45%] w-full'>
+                                    <div className='w-[90%]'>
+                                        <p className='text-[35px] text-center'>สมาชิกทั้งหมด</p>
+                                        <div className='flex text-[37px] justify-between mt-[40px]  w-full'>
+                                            <p>ชื่อ</p>
+                                            <p>เบอร์โทรศัพท์</p>
+                                        </div>
+                                        <div className='h-full w-ful overflow-scroll'>
+                                            {allusers.map((data, index) => (
+                                                <div key={index} className='flex text-[35px] justify-between mt-[20px] w-full'>
+                                                    <p>{data.fullname}</p>
+                                                    <p>{data.phonenum}</p>
+                                                </div>
+                                            ))}
+                                          
+                                        </div>
+
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -148,17 +206,24 @@ function Setuser() {
                 {openline &&
                     <div className='border absolute w-screen h-screen'>
                         <div className='flex h-full justify-center items-center'>
-                            <div className='bg-white w-[594px] h-[400px] drop-shadow-[16px_16px_0_rgba(0,0,0,0.4)] rounded-[24px] animate-scaleIn'>
+                            <div className='bg-white w-[594px] h-[500px] drop-shadow-[16px_16px_0_rgba(0,0,0,0.4)] rounded-[24px] animate-scaleIn'>
                                 <div className='h-full w-full flex justify-center p-[20px]'>
                                     <div className='h-full w-[90%] text-center pt-[40px]'>
-                                        <p className='text-[40px]'>ประกาศ</p>
-                                        <p className='text-[25px]'>ปิดปรับปรุงระบบชั่วคราว ระหว่าง 19:00 - 23:00 ขออภัยในความไม่สะดวก</p>
-                                        {/* <div>
-                                            <input onChange={(e) => setNumber(e.target.value)} placeholder='exp:065-xxx-xxx' type="number" pattern="[0-9]*" className='pl-[20px] border border-black rounded-[50px] w-[90%] h-[80px] outline-none  mt-[50px] text-[30px]' />
-                                        </div> */}
+                                        {/* <p className='text-[40px]'>ประกาศ</p> */}
+                                        <p className='text-[30px]'>ระบุขัอความที่ต้องการส่งผ่าน LINE OA</p>
+                                        <div>
+                                            <textarea
+                                                onChange={(e) => set_messageline(e.target.value)}
+                                                placeholder="ระบุข้อความ"
+                                                className='pl-[20px] border text-ellipsis border-black rounded-[10px] w-[90%] h-[200px] outline-none  mt-[50px] text-[30px]'
+                                                style={{ wordWrap: 'break-word' }}
+                                                value={messageline}
+                                            />
+                                        </div>
+
                                         <div className='flex justify-center mt-[50px] mb-[30px]'>
-                                            {/* <button onClick={hadlecloseUser} className='bg-[#FF9292] hover:bg-[#f45353] w-[173px] h-[71px] text-[40px] rounded-[24px] mr-[12px]'>ยกเลิก</button> */}
-                                            <button onClick={closeLine} className='bg-[#75C381] w-[173px] h-[71px] rounded-[24px] text-[40px] '>ตกลง</button>
+                                            <button onClick={closeLine} className='bg-[#FF9292] hover:bg-[#f45353] w-[173px] h-[71px] text-[40px] rounded-[24px] mr-[12px]'>ยกเลิก</button>
+                                            <button onClick={sendline} className='bg-[#75C381] w-[173px] h-[71px] rounded-[24px] text-[40px] '>ตกลง</button>
                                         </div>
                                     </div>
                                 </div>
